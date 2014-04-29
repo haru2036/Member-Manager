@@ -61,6 +61,7 @@ instance Yesod App where
         "config/client_session_key.aes"
 
     defaultLayout widget = do
+        maid <- maybeAuthId
         master <- getYesod
         mmsg <- getMessage
 
@@ -168,7 +169,6 @@ isAdmin = do
         case mauth of
           Nothing -> return AuthenticationRequired
           Just user -> return $ entityToAuthStatus user
-
 
 -- Note: previous versions of the scaffolding included a deliver function to
 -- send emails. Unfortunately, there are too many different options for us to
