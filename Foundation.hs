@@ -88,7 +88,7 @@ instance Yesod App where
 
     -- This functions declares authrize
     -- todo:uncomment this
-    -- isAuthorized BlogR True = isAdmin 
+    isAuthorized UserConfirmationR _ = isAdmin 
 
     isAuthorized _ _ = return Authorized
 
@@ -161,7 +161,7 @@ entityToAuthStatus user tfFunction = tfAuth $ tfFunction $ entityVal user
 
 tfAuth :: Bool -> AuthResult
 tfAuth True = Authorized
-tfAuth False = Unauthorized "You must be an admin"
+tfAuth False = Unauthorized "You must be authorized user"
 
 isAdmin = do
         mauth <- maybeAuth
