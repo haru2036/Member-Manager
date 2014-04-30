@@ -19,8 +19,6 @@ import Model
 import Text.Jasmine (minifym)
 import Text.Hamlet (hamletFile)
 import Yesod.Core.Types (Logger)
-import Control.Monad
-import Data.Text
 
 -- | The site argument for your application. This can be a good place to
 -- keep settings and values requiring initialization before your application
@@ -141,6 +139,7 @@ instance YesodAuth App where
                     { userIdent = credsIdent creds
                     , userPassword = Nothing
                     , userIsAdmin = False
+                    , userIsConfirmed = False
                     }
 
     -- You can add other plugins like BrowserID, email or OAuth here
@@ -157,8 +156,8 @@ instance RenderMessage App FormMessage where
 getExtra :: Handler Extra
 getExtra = fmap (appExtra . settings) getYesod
 
-entityToAuthStatus :: Entity User -> AuthResult
-entityToAuthStatus user = tfAuth $ userIsAdmin $ entityVal user
+entityToAuthStatus :: Entity User -> (User -> Bool) -> AuthResult
+entityToAuthStatus user tfFunction = tfAuth $ tfFunction $ entityVal user
 
 tfAuth :: Bool -> AuthResult
 tfAuth True = Authorized
@@ -168,8 +167,13 @@ isAdmin = do
         mauth <- maybeAuth
         case mauth of
           Nothing -> return AuthenticationRequired
-          Just user -> return $ entityToAuthStatus user
+          Just user -> return $ entityToAuthStatus user userIsAdmin
 
+isConfirmed = do
+        mauth <- maybeAuth
+        case mauth of
+          Nothing -> return AuthenticationRequired
+          Just user -> return $ entityToAuthStatus user userIsConfirmed
 -- Note: previous versions of the scaffolding included a deliver function to
 -- send emails. Unfortunately, there are too many different options for us to
 -- give a reasonable default. Instead, the information is available on the
