@@ -1,0 +1,7 @@
+<h1>
+    ユーザを承認
+<form method=post action=@{MirrorR}>
+#{userName}
+<input type=text name=userIdent>#{userIdent}
+<input type=checkbox name=isConfirmed>このユーザを信頼します。
+<input type=submit>

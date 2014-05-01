@@ -87,7 +87,6 @@ instance Yesod App where
     authRoute _ = Just $ AuthR LoginR
 
     -- This functions declares authrize
-    -- todo:uncomment this
     isAuthorized UserConfirmationR _ = isAdmin 
 
     isAuthorized _ _ = return Authorized
