@@ -1,5 +1,5 @@
 {-# LANGUAGE PackageImports #-}
-import "WebRegister" Application (getApplicationDev)
+import "EquipmentManager" Application (getApplicationDev)
 import Network.Wai.Handler.Warp
     (runSettings, defaultSettings, setPort)
 import Control.Concurrent (forkIO)
