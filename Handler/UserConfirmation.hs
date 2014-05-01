@@ -5,7 +5,7 @@ import Import
 getUserConfirmationR :: Handler Html
 getUserConfirmationR = do
   users <- runDB $ selectList [] [Desc UserIdent]
-  defaultLayout $(widgetFile "user-confirmation")
+  defaultLayout $(widgetFile "userList")
 
 postUserConfirmationR :: Handler Html
 postUserConfirmationR = error "Not yet implemented: postUserConfirmationR"
