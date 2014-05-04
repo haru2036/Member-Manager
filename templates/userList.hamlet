@@ -1,4 +1,4 @@
 <ul>
     $forall user <- users
         <li>
-            <a href=@{UserConfirmationR}>#{userIdent $ entityVal user}
+            <a href="/admin/user-confirmation/#{userIdent $ entityVal user}">#{userIdent $ entityVal user}
