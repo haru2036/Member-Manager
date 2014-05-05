@@ -88,6 +88,7 @@ instance Yesod App where
 
     -- This functions declares authrize
     isAuthorized UserConfirmationR _ = isAdmin 
+    isAuthorized UserListR _ = isAdmin 
 
     isAuthorized _ _ = return Authorized
 
