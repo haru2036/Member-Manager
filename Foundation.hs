@@ -19,6 +19,7 @@ import Model
 import Text.Jasmine (minifym)
 import Text.Hamlet (hamletFile)
 import Yesod.Core.Types (Logger)
+import Data.Text (Text)
 
 -- | The site argument for your application. This can be a good place to
 -- keep settings and values requiring initialization before your application
@@ -87,7 +88,7 @@ instance Yesod App where
     authRoute _ = Just $ AuthR LoginR
 
     -- This functions declares authrize
-    isAuthorized UserConfirmationR _ = isAdmin 
+    isAuthorized (UserConfirmationR _) _ = isAdmin 
     isAuthorized UserListR _ = isAdmin 
 
     isAuthorized _ _ = return Authorized
