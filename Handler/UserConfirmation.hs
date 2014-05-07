@@ -1,7 +1,6 @@
 module Handler.UserConfirmation where
 
 import Import
-import Data.Text
 
 
 getUserListR :: Handler Html
@@ -16,8 +15,10 @@ getUserConfirmationR userName = do
 
 postUserConfirmationR :: Text -> Handler Html
 postUserConfirmationR userName = do
-  -- ToDo: Append some codes to get the userIdent from Post Request
+  posted <- runInputPost $ ireq checkBoxField "isConfirmed"
+  mayBeCurrentUser <- runDB $ getBy $ UniqueUser userName
+  case mayBeCurrentUser of
+    Just user -> runDB $ update (entityKey user) [UserIsConfirmed =. posted]
   mayBeUser <- runDB $ getBy $ UniqueUser userName
-  -- ToDo: Append some codes to save to DB
   defaultLayout $(widgetFile "userConfirmForm")
 
