@@ -10,15 +10,25 @@ getUserListR = do
 
 getUserConfirmationR :: Text -> Handler Html
 getUserConfirmationR userName = do
+  let mayBeMessage = Nothing
+  render <- getMessageRender
   mayBeUser <- runDB $ getBy $ UniqueUser userName
+  let mayBeMessage = getConfirmedMessage Nothing mayBeUser
   defaultLayout $(widgetFile "userConfirmForm")
 
 postUserConfirmationR :: Text -> Handler Html
 postUserConfirmationR userName = do
   posted <- runInputPost $ ireq checkBoxField "isConfirmed"
+  render <- getMessageRender 
   mayBeCurrentUser <- runDB $ getBy $ UniqueUser userName
+  let mayBeMessage = getConfirmedMessage (Just posted) mayBeCurrentUser
   case mayBeCurrentUser of
     Just user -> runDB $ update (entityKey user) [UserIsConfirmed =. posted]
   mayBeUser <- runDB $ getBy $ UniqueUser userName
   defaultLayout $(widgetFile "userConfirmForm")
 
+getConfirmedMessage :: Maybe Bool -> Maybe a -> Maybe AppMessage
+getConfirmedMessage (Just True) (Just _) = Just MsgUserConfirmed
+getConfirmedMessage (Just False) (Just _) = Just MsgUserIgnored
+getConfirmedMessage Nothing (Just _) = Nothing
+getConfirmedMessage _ Nothing = Just MsgUserNotFound
