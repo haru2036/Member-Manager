@@ -1,5 +1,8 @@
 <h1>
     ユーザを承認
+$maybe message <- mayBeMessage
+    <div class="alert alert-info">
+        #{render message}
 $maybe user <- mayBeUser
     <form method=post action="/admin/user-confirmation/#{userIdent $ entityVal user}">
         <p>#{userIdent $ entityVal user}
@@ -8,5 +11,3 @@ $maybe user <- mayBeUser
         $else
             <input type=checkbox name=isConfirmed >このユーザを信頼します。
         <input type=submit>
-$nothing 
-    ユーザが見つかりません
