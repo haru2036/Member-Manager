@@ -1,7 +1,12 @@
 <h1>
     ユーザを承認
-<form method=post action=@{MirrorR}>
-#{userName}
-<input type=text name=userIdent>#{userIdent}
-<input type=checkbox name=isConfirmed>このユーザを信頼します。
-<input type=submit>
+$maybe user <- mayBeUser
+    <form method=post action="/admin/user-confirmation/#{userIdent $ entityVal user}">
+        <p>#{userIdent $ entityVal user}
+        $if (userIsConfirmed (entityVal user))
+            <input type=checkbox name=isConfirmed checked>このユーザを信頼します。
+        $else
+            <input type=checkbox name=isConfirmed >このユーザを信頼します。
+        <input type=submit>
+$nothing 
+    ユーザが見つかりません
