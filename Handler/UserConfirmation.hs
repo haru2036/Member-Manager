@@ -10,7 +10,6 @@ getUserListR = do
 
 getUserConfirmationR :: Text -> Handler Html
 getUserConfirmationR userName = do
-  let mayBeMessage = Nothing
   render <- getMessageRender
   mayBeUser <- runDB $ getBy $ UniqueUser userName
   let mayBeMessage = getConfirmedMessage Nothing mayBeUser
