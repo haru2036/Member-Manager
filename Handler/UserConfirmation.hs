@@ -23,6 +23,7 @@ postUserConfirmationR userName = do
   let mayBeMessage = getConfirmedMessage (Just posted) mayBeCurrentUser
   case mayBeCurrentUser of
     Just user -> runDB $ update (entityKey user) [UserIsConfirmed =. posted]
+    Nothing -> return ()
   mayBeUser <- runDB $ getBy $ UniqueUser userName
   defaultLayout $(widgetFile "userConfirmForm")
 
