@@ -1,4 +1,4 @@
-exec: ../dist/build/WebRegister/WebRegister
+exec: ../dist/build/Member-Manager/Member-Manager
 args:
     - production
 host: <<HOST-NOT-SET>>

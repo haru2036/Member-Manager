@@ -1,5 +1,5 @@
 {-# LANGUAGE PackageImports #-}
-import "EquipmentManager" Application (getApplicationDev)
+import "Member-Manager" Application (getApplicationDev)
 import Network.Wai.Handler.Warp
     (runSettings, defaultSettings, setPort)
 import Control.Concurrent (forkIO)
