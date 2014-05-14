@@ -10,10 +10,10 @@ Email
     user UserId Maybe
     verkey Text Maybe
     UniqueEmail email
-Item
+Member
     name Text
-    price Int
-Transaction
-    items [Item]
-    totalPrice Int
+    emailAddress Text
+    affiliations [Affiliation]
+Affiliation
+    name Text
  -- By default this file is used in Model.hs (which is imported by Foundation.hs)
