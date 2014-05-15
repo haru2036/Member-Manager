@@ -30,13 +30,8 @@ $newline never
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="navbar-inner">
                 <div class="container">
-                    <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                        <span class="icon-bar">
-                        <span class="icon-bar">
-                        <span class="icon-bar">
-                    <a class="brand" href="#">Project name
-                    <div class="nav-collapse collapse">
-                    <ul class="nav">
+                    <a class="navbar-brand" href="#">Project name
+                    <ul class="nav navbar-nav">
                         <li class="active">
                             <a href="/">Home
                         <li>
