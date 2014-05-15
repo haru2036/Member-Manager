@@ -11,7 +11,11 @@ Email
     verkey Text Maybe
     UniqueEmail email
 Member
-    name Text
+    firstName Text
+    lastName Text
+    PersonName firstName lastName
+    graduate Int
+    department Text
     emailAddress Text
     affiliations [Affiliation]
 Affiliation
