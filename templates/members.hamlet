@@ -4,5 +4,4 @@
         $forall member <- members
             <tr>
                 <td>
-                    <!-- member link here-->
-                    <a href="">
+                    #{memberFirstName $ entityVal member}

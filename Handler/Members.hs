@@ -3,4 +3,6 @@ module Handler.Members where
 import Import
 
 getMembersR :: Handler Html
-getMembersR = error "Not yet implemented: getMembersR"
+getMembersR = do
+  members <- runDB $ selectList [] [Desc MemberFirstName]
+  defaultLayout $(widgetFile "members")
