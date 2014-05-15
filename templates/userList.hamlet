@@ -1,4 +1,7 @@
-<ul class="list-group">
-    $forall user <- users
-        <li class="list-group-item">
-            <a href="/admin/user-confirmation/#{userIdent $ entityVal user}">#{userIdent $ entityVal user}
+<div class="panel panel-default">
+    <table class="table">
+        <tr>
+        $forall user <- users
+            <tr>
+                <td>
+                    <a href="/admin/user-confirmation/#{userIdent $ entityVal user}">#{userIdent $ entityVal user}
