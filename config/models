@@ -11,6 +11,7 @@ Email
     verkey Text Maybe
     UniqueEmail email
 Member
+    studentId Text
     firstName Text
     lastName Text
     PersonName firstName lastName

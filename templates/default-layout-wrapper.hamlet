@@ -32,10 +32,10 @@ $newline never
                 <div class="container">
                     <a class="navbar-brand" href="#">Project name
                     <ul class="nav navbar-nav">
-                        <li class="active">
+                        <li>
                             <a href="/">Home
                         <li>
-                            <a href="#about">About
+                            <a href=@{UserListR}>Admin
                         <li>
                             $maybe name <- maid
                                 <a href="/auth/logout">Logout

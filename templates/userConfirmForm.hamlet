@@ -11,3 +11,4 @@ $maybe user <- mayBeUser
         $else
             <input type=checkbox name=isConfirmed >このユーザを信頼します。
         <input type=submit>
+<a href=@{UserListR}>Back
