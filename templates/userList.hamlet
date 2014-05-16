@@ -1,7 +1,18 @@
 <div class="panel panel-default">
     <table class="table">
         <tr>
+            <td>
+                UserName
+            <td>
+                Admin
+            <td>
+                Confirmed
         $forall user <- users
             <tr>
                 <td>
-                    <a href="/admin/user-confirmation/#{userIdent $ entityVal user}">#{userIdent $ entityVal user}
+                    <a href="/admin/user-confirmation/#{userIdent $ entityVal user}">
+                        #{userIdent $ entityVal user}
+                <td>
+                    #{userIsAdmin $ entityVal user}
+                <td>
+                    #{userIsConfirmed $ entityVal user}
