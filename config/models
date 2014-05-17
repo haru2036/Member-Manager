@@ -20,7 +20,9 @@ Member
     emailAddress Text
     affiliations [Affiliation]
     StudentId graduate department number
+    UniqueMember emailAddress
 Affiliation
     name Text
+    UniqueAffiliation name
     deriving Eq
  -- By default this file is used in Model.hs (which is imported by Foundation.hs)

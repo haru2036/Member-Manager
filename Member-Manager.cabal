@@ -23,6 +23,7 @@ library
                      Handler.UserConfirmation
                      Handler.Members
                      Handler.AddMember
+                     Handler.Affiliations
 
     if flag(dev) || flag(library-only)
         cpp-options:   -DDEVELOPMENT

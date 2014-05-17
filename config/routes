@@ -9,3 +9,4 @@
 /admin/user-list UserListR GET
 members MembersR GET
 /add-member AddMemberR GET POST
+/admin/affiliations AffiliationsR GET POST

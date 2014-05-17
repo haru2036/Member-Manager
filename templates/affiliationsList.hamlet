@@ -1,0 +1,12 @@
+<div class="panel panel-default">
+    <table class="table">
+        <tr>
+        $forall affiliation <- affiliations
+            <tr>
+                <td>
+                    #{affiliationName $ entityVal affiliation}
+<form method=post action=@{AffiliationsR}>
+    <input type="text" name="affiliationName">
+    <input type="radio" name="addremove" value="add">Add
+    <input type="radio" name="addremove" value="remove">Remove
+    <input type="submit" value="送信する">

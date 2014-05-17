@@ -31,6 +31,7 @@ import Handler.Home
 import Handler.UserConfirmation
 import Handler.Members
 import Handler.AddMember
+import Handler.Affiliations
 
 -- This line actually creates our YesodDispatch instance. It is the second half
 -- of the call to mkYesodData which occurs in Foundation.hs. Please see the
