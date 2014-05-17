@@ -37,6 +37,8 @@ $newline never
                         <li>
                             <a href=@{UserListR}>Admin
                         <li>
+                            <a href=@{AddMemberR}>メンバー登録
+                        <li>
                             $maybe name <- maid
                                 <a href="/auth/logout">Logout
                             $nothing

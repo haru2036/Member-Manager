@@ -22,5 +22,5 @@ Member
     StudentId graduate department number
 Affiliation
     name Text
-    deriving
+    deriving Eq
  -- By default this file is used in Model.hs (which is imported by Foundation.hs)
