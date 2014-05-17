@@ -4,4 +4,4 @@
         $forall member <- members
             <tr>
                 <td>
-                    #{memberStudentId $ entityVal member}
+                    #{memberNumber $ entityVal member}

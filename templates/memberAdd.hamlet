@@ -1,0 +1,3 @@
+<form action=@{AddMemberR} method="POST" enctype="#{enctype}">
+    ^{widget}
+    <input type="submit" value="送信">

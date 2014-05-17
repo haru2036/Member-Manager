@@ -8,3 +8,4 @@
 /admin/user-confirmation/#Text UserConfirmationR GET POST
 /admin/user-list UserListR GET
 members MembersR GET
+/add-member AddMemberR GET POST
