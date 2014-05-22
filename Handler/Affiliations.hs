@@ -11,7 +11,6 @@ postAffiliationsR :: Handler Html
 postAffiliationsR = do
   affiliationPost<- runInputPost $ ireq textField "affiliationName"
   addremove <- runInputPost $ ireq textField "addremove"
-  --render <- getMessageRender 
   case addremove of
     "add"-> addAffiliation affiliationPost
     "remove" -> removeAffiliation affiliationPost
