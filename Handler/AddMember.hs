@@ -1,6 +1,10 @@
 module Handler.AddMember where
 
 import Import
+import Data.Hash
+import Data.Word
+import qualified Data.Text as T
+import Network.SMTP.Simple
 
 getAddMemberR :: Handler Html
 getAddMemberR = do 
@@ -9,7 +13,32 @@ getAddMemberR = do
   defaultLayout $(widgetFile "memberAdd")
 
 postAddMemberR :: Handler Html
-postAddMemberR = error "Not yet implemented: postAddMemberR"
+postAddMemberR = do
+  affiliations <- getAffiliationList
+  ((result, widget), enctype) <- runFormPost (addMemberForm affiliations)
+  affiliations <- getAffiliationList
+  defaultLayout $(widgetFile "memberAdd")
+
+sendConfirmMail member = do
+  let address = memberEmailAddress member
+  let hash = hashText address 
+  lift $ sendMail hash address
+  runDB $ insert UnConfirmedMember
+                    { unConfirmedMemberConfirmKey = hash
+                    , unConfirmedMemberMember = member
+                    }
+
+sendMail :: String -> Text -> IO()
+sendMail code address = do
+  sendSimpleMessages (\x -> putStrLn x) "smtp.gmail.com" "gmail.com" [message]
+       where message = SimpleMessage
+                          [NameAddr Nothing "team@exmaple.com"]
+                          [NameAddr Nothing (T.unpack address)]
+                          "アカウントの検証"
+                          ("ソフトウェア研究部からメールアドレスの検証をお願いします。あなたが登録したものなら以下のURLにアクセスしてください : " ++ (show code))
+
+hashText :: Text -> String
+hashText text = show $ asWord64 $ hash $ T.unpack text
 
 addMemberForm :: [(Text, Affiliation)] ->  Html -> MForm Handler (FormResult Member, Widget)
 addMemberForm affiliations = do 

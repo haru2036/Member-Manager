@@ -10,6 +10,14 @@ Email
     user UserId Maybe
     verkey Text Maybe
     UniqueEmail email
+
+UnConfirmedMember
+    confirmKey String
+    member Member
+
+ConfirmedMember
+    member Member
+
 Member
     firstName Text
     lastName Text
