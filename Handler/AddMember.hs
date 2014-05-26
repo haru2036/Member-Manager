@@ -1,10 +1,13 @@
+{-# LANGUAGE OverloadedStrings #-}
 module Handler.AddMember where
 
 import Import
 import Data.Hash
 import Data.Word
 import qualified Data.Text as T
-import Network.SMTP.Simple
+import qualified Data.Text.Lazy as LT
+import Network.Mail.Client.Gmail
+import Network.Mail.Mime
 
 getAddMemberR :: Handler Html
 getAddMemberR = do 
@@ -16,26 +19,31 @@ postAddMemberR :: Handler Html
 postAddMemberR = do
   affiliations <- getAffiliationList
   ((result, widget), enctype) <- runFormPost (addMemberForm affiliations)
-  affiliations <- getAffiliationList
-  defaultLayout $(widgetFile "memberAdd")
+  render <- getMessageRender
+  case result of
+    FormSuccess member -> sendConfirmMail member
+  let mayBeMessage = case result of
+                        FormSuccess _ -> Just MsgUserPending
+                        _ -> Just MsgFormError
+  defaultLayout $(widgetFile "info")
 
 sendConfirmMail member = do
   let address = memberEmailAddress member
   let hash = hashText address 
-  lift $ sendMail hash address
-  runDB $ insert UnConfirmedMember
-                    { unConfirmedMemberConfirmKey = hash
-                    , unConfirmedMemberMember = member
-                    }
+  sender <- getSender
+  case sender of
+    Just sndr -> do 
+      lift $ sendMail (entityVal sndr) hash address
+      runDB $ insert UnConfirmedMember
+                        { unConfirmedMemberConfirmKey = hash
+                        , unConfirmedMemberMember = member
+                        }
 
-sendMail :: String -> Text -> IO()
-sendMail code address = do
-  sendSimpleMessages (\x -> putStrLn x) "smtp.gmail.com" "gmail.com" [message]
-       where message = SimpleMessage
-                          [NameAddr Nothing "team@exmaple.com"]
-                          [NameAddr Nothing (T.unpack address)]
-                          "アカウントの検証"
-                          ("ソフトウェア研究部からメールアドレスの検証をお願いします。あなたが登録したものなら以下のURLにアクセスしてください : " ++ (show code))
+
+getSender = runDB $ selectFirst [] [Asc SenderName]
+
+sendMail :: Sender -> String -> Text -> IO()
+sendMail sender code address = sendGmail (LT.fromStrict (senderGmail sender)) (LT.fromStrict (senderPasswd sender)) (Address (Just (senderName sender)) (senderGmail sender)) [Address Nothing address] [] [] (T.pack ("ソフ研から、アカウントの認証のお願い")) (LT.pack ("このコードを使ってアカウントを認証してください。" ++ code)) []
 
 hashText :: Text -> String
 hashText text = show $ asWord64 $ hash $ T.unpack text

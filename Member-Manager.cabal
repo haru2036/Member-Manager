@@ -71,7 +71,8 @@ library
                  , monad-logger                  >= 0.3        && < 0.4
                  , fast-logger                   >= 2.1.4      && < 2.2
                  , wai-logger                    >= 2.1        && < 2.2
-                 , SMTPClient                    >= 1.1        && < 2.2
+                 , smtps-gmail                   >= 1.1        && < 1.3
+                 , mime-mail                     >= 0.4        && < 0.5
                  , data-hash                     >= 0.1        && < 0.3
 
 executable         Member-Manager
