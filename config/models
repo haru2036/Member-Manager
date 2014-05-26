@@ -21,6 +21,7 @@ ConfirmedMember
 Member
     firstName Text
     lastName Text
+    phoneNumber Text
     PersonName firstName lastName
     graduate Int
     department Text

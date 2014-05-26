@@ -55,6 +55,7 @@ addMemberForm affiliations = do
   renderBootstrap $ Member
     <$> areq textField "姓" Nothing
     <*> areq textField "名" Nothing
+    <*> areq textField "電話番号" Nothing
     <*> areq intField  "入学年(下二桁)" Nothing
     <*> areq textField  "学科記号" Nothing
     <*> areq intField  "学籍番号(下3桁)" Nothing
