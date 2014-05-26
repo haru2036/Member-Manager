@@ -38,6 +38,8 @@ sendConfirmMail member = do
                         { unConfirmedMemberConfirmKey = hash
                         , unConfirmedMemberMember = member
                         }
+      lift $ return ()
+    Nothing -> lift $ return ()
 
 
 getSender = runDB $ selectFirst [] [Asc SenderName]
