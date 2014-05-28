@@ -10,3 +10,4 @@
 /admin/members MembersR GET
 /add-member AddMemberR GET POST
 /admin/affiliations AffiliationsR GET POST
+/confirm/#String ConfirmMemberR GET
