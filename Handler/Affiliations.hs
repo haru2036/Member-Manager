@@ -14,6 +14,7 @@ postAffiliationsR = do
   case addremove of
     "add"-> addAffiliation affiliationPost
     "remove" -> removeAffiliation affiliationPost
+    _ -> lift $ return ()
   affiliations <- runDB $ selectList [] [Desc AffiliationName]
   defaultLayout $(widgetFile "affiliationsList")
 
