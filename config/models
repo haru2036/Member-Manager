@@ -16,9 +16,6 @@ UnConfirmedMember
     member Member
     UniqueConfirm confirmKey
 
-ConfirmedMember
-    member Member
-
 Member
     firstName Text
     lastName Text
