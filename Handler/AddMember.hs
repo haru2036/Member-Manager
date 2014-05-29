@@ -45,7 +45,17 @@ sendConfirmMail member = do
 getSender = runDB $ selectFirst [] [Asc SenderName]
 
 sendMail :: Sender -> String -> Text -> IO()
-sendMail sender code address = sendGmail (LT.fromStrict (senderGmail sender)) (LT.fromStrict (senderPasswd sender)) (Address (Just (senderName sender)) (senderGmail sender)) [Address Nothing address] [] [] (T.pack ("ソフ研から、アカウントの認証のお願い")) (LT.pack ("このコードを使ってアカウントを認証してください。" ++ code)) []
+sendMail sender code address = sendGmail 
+                               (LT.fromStrict (senderGmail sender)) 
+                               (LT.fromStrict (senderPasswd sender)) 
+                               (Address (Just (senderName sender)) 
+                               (senderGmail sender)) 
+                               [Address Nothing address] 
+                               [] 
+                               [] 
+                               (T.pack ("ソフ研から、アカウントの認証のお願い")) 
+                               (LT.pack ("このコードを使ってアカウントを認証してください。" ++ code)) 
+                               []
 
 hashText :: Text -> String
 hashText text = show $ asWord64 $ hash $ T.unpack text
