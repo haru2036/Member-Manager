@@ -33,7 +33,7 @@ sendConfirmMail member = do
   case sender of
     Just sndr -> do 
       lift $ sendMail (entityVal sndr) hash address render
-      runDB $ insert UnConfirmedMember
+      _ <- runDB $ insert UnConfirmedMember
                         { unConfirmedMemberConfirmKey = hash
                         , unConfirmedMemberMember = member
                         }
@@ -43,7 +43,6 @@ sendConfirmMail member = do
 
 getSender = runDB $ selectFirst [] [Asc SenderName]
 
--- sendMail :: Sender -> String -> Text -> -> IO()
 sendMail sender code address render = sendGmail 
                                (LT.fromStrict (senderGmail sender)) 
                                (LT.fromStrict (senderPasswd sender)) 
