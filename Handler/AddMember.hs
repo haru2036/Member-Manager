@@ -20,11 +20,9 @@ postAddMemberR = do
   affiliations <- getAffiliationList
   ((result, widget), enctype) <- runFormPost (addMemberForm affiliations)
   render <- getMessageRender
-  case result of
-    FormSuccess member -> sendConfirmMail member
-  let mayBeMessage = case result of
-                        FormSuccess _ -> Just MsgUserPending
-                        _ -> Just MsgFormError
+  mayBeMessage <- case result of
+                    FormSuccess member -> sendConfirmMail member
+                    _ -> lift $ return $ Just MsgFormError
   defaultLayout $(widgetFile "info")
 
 sendConfirmMail member = do
@@ -38,8 +36,8 @@ sendConfirmMail member = do
                         { unConfirmedMemberConfirmKey = hash
                         , unConfirmedMemberMember = member
                         }
-      lift $ return ()
-    Nothing -> lift $ return ()
+      lift $ return (Just MsgUserPending)
+    Nothing -> lift $ return (Just MsgSenderNotFoundError)
 
 
 getSender = runDB $ selectFirst [] [Asc SenderName]
