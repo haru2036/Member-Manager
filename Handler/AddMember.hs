@@ -29,9 +29,10 @@ sendConfirmMail member = do
   let address = memberEmailAddress member
   let hash = hashText address 
   sender <- getSender
+  render <- getUrlRender
   case sender of
     Just sndr -> do 
-      lift $ sendMail (entityVal sndr) hash address
+      lift $ sendMail (entityVal sndr) hash address render
       runDB $ insert UnConfirmedMember
                         { unConfirmedMemberConfirmKey = hash
                         , unConfirmedMemberMember = member
@@ -42,8 +43,8 @@ sendConfirmMail member = do
 
 getSender = runDB $ selectFirst [] [Asc SenderName]
 
-sendMail :: Sender -> String -> Text -> IO()
-sendMail sender code address = sendGmail 
+-- sendMail :: Sender -> String -> Text -> -> IO()
+sendMail sender code address render = sendGmail 
                                (LT.fromStrict (senderGmail sender)) 
                                (LT.fromStrict (senderPasswd sender)) 
                                (Address (Just (senderName sender)) 
@@ -52,8 +53,10 @@ sendMail sender code address = sendGmail
                                [] 
                                [] 
                                (T.pack ("ソフ研から、アカウントの認証のお願い")) 
-                               (LT.pack ("このコードを使ってアカウントを認証してください。" ++ code)) 
+                               (LT.append (LT.pack "このコードを使ってアカウントを認証してください。") (LT.fromStrict (buildCodeMessage code render)))
                                []
+
+buildCodeMessage code render = render (ConfirmMemberR code)
 
 hashText :: Text -> String
 hashText text = show $ asWord64 $ hash $ T.unpack text
