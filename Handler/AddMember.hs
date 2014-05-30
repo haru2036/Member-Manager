@@ -70,7 +70,7 @@ addMemberForm affiliations extra = do
   (numberResult, numberView) <- mreq intField  "学籍番号(下3桁)" Nothing
   (mailResult, mailView) <- mreq emailField "eMailアドレス" Nothing
   (affiliationResult, affiliationView) <- mreq (multiSelectFieldList (affiliations)) "所属する班" Nothing
-  (paidResult, paidView) <- mreq boolField "" (Just False)
+  (paidResult, paidView) <- mreq alwaysFalseField "" (Just False)
   let result = Member
           <$> firstNameResult
           <*> secondNameResult
@@ -83,6 +83,14 @@ addMemberForm affiliations extra = do
           <*> paidResult
       widget = $(widgetFile "addMemberForm")
   return (result, widget)
+
+alwaysFalseField :: Monad m => RenderMessage (HandlerSite m) FormMessage => Field m Bool
+alwaysFalseField = Field
+      { fieldParse = \_ _ -> return $ Right $ Just False
+      , fieldView = \_ _ _ _ _ -> [whamlet| |]
+      , fieldEnctype = UrlEncoded
+                                    }
+
 
 getAffiliationList = do 
   aflist <- runDB $ selectList [] [Desc AffiliationName]
