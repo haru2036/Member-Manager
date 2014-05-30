@@ -1,0 +1,27 @@
+#{extra}
+<table>
+    <tr>
+        <th>姓
+        <td>^{fvInput firstNameView}
+        <th>名
+        <td>^{fvInput secondNameView}
+    <tr>
+        <th>電話番号
+        <td>^{fvInput phoneView}
+    <tr>
+        <th>入学年(下2桁)
+        <td>^{fvInput gradView}
+    <tr>
+        <th>学科記号
+        <td>^{fvInput departmentView}
+    <tr>
+        <th>学籍番号(下3桁)
+        <td>^{fvInput numberView}
+    <tr>
+        <th>eMailアドレス
+        <td>^{fvInput mailView}
+    <tr>
+        <th>所属する班
+        <td>^{fvInput affiliationView}
+    <tr>
+        <td style="display:none">^{fvInput paidView}

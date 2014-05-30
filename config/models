@@ -26,6 +26,7 @@ Member
     number Int 
     emailAddress Text
     affiliations [Affiliation]
+    doesPaid Bool
     StudentId graduate department number
     UniqueMember emailAddress
 
