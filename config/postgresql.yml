@@ -1,0 +1,23 @@
+Default: &defaults
+    user: membman
+    password: membman
+    host: localhost
+    port: 5432
+    database: membman
+    poolsize: 10
+
+Development:
+    <<: *defaults
+
+Testing:
+    database: membman_test
+    <<: *defaults
+
+Staging:
+    database: membman_staging
+    poolsize: 100
+    <<: *defaults
+
+Production:
+    poolsize: 100
+    <<: *defaults
