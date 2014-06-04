@@ -4,7 +4,7 @@ $maybe message <- mayBeMessage
     <div class="alert alert-info">
         #{render message}
 $maybe user <- mayBeUser
-    <form method=post action="/admin/user-confirmation/#{userIdent $ entityVal user}">
+    <form method=post action=@{UserConfirmationR $ userIdent $ entityVal user}">
         <p>#{userIdent $ entityVal user}
         $if (userIsConfirmed (entityVal user))
             <input type=checkbox name=isConfirmed checked>このユーザを信頼します。

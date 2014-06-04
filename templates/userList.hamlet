@@ -10,7 +10,7 @@
         $forall user <- users
             <tr>
                 <td>
-                    <a href="/admin/user-confirmation/#{userIdent $ entityVal user}">
+                    <a href=@{UserConfirmationR $  userIdent $ entityVal user}>
                         #{userIdent $ entityVal user}
                 <td>
                     #{userIsAdmin $ entityVal user}
