@@ -3,7 +3,7 @@ module Handler.AddMember where
 
 import Import
 import Data.Hash
-import Data.Word
+import Data.Word()
 import qualified Data.Text as T
 import qualified Data.Text.Lazy as LT
 import Network.Mail.Client.Gmail
@@ -18,23 +18,24 @@ getAddMemberR = do
 postAddMemberR :: Handler Html
 postAddMemberR = do
   affiliations <- getAffiliationList
-  ((result, widget), enctype) <- runFormPost (addMemberForm affiliations)
+  ((result, widget), _) <- runFormPost (addMemberForm affiliations)
   render <- getMessageRender
   mayBeMessage <- case result of
                     FormSuccess member -> sendConfirmMail member
                     _ -> lift $ return $ Just MsgFormError
   defaultLayout $(widgetFile "info")
 
+sendConfirmMail :: Member -> HandlerT App IO (Maybe AppMessage)
 sendConfirmMail member = do
   let address = memberEmailAddress member
-  let hash = hashText address 
+  let hashed = hashText address 
   sender <- getSender
   render <- getUrlRender
   case sender of
     Just sndr -> do 
-      lift $ sendMail (entityVal sndr) hash address render
+      lift $ sendMail (entityVal sndr) hashed address render
       _ <- runDB $ insert UnConfirmedMember
-                        { unConfirmedMemberConfirmKey = hash
+                        { unConfirmedMemberConfirmKey = hashed
                         , unConfirmedMemberMember = member
                         }
       lift $ return (Just MsgUserPending)
