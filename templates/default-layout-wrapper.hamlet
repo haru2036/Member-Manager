@@ -35,7 +35,7 @@ $newline never
                         <li>
                             <a href="/">Home
                         <li>
-                            <a href=@{UserListR}>Admin
+                            <a href=@{AdminR}>Admin
                         <li>
                             <a href=@{AddMemberR}>メンバー登録
                         <li>

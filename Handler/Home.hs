@@ -37,3 +37,8 @@ sampleForm :: Form (FileInfo, Text)
 sampleForm = renderDivs $ (,)
     <$> fileAFormReq "Choose a file"
     <*> areq textField "What's on the file?" Nothing
+
+getAdminR :: Handler Html
+getAdminR = defaultLayout $ do
+        setTitle "管理者メニュー"
+        $(widgetFile "adminMenu")

@@ -1,0 +1,14 @@
+<h1>
+    管理者メニュー
+<div class="panel panel-default">
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>
+                    <a href=@{UserListR}>管理者ユーザの設定
+            <tr>
+                <td>
+                    <a href=@{MembersR}>部員一覧
+            <tr>
+                <td>
+                    <a href=@{AffiliationsR}>所属に関する設定

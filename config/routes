@@ -5,6 +5,7 @@
 /robots.txt RobotsR GET
 
 / HomeR GET POST
+/admin AdminR GET 
 /admin/user-confirmation/#Text UserConfirmationR GET POST
 /admin/user-list UserListR GET
 /admin/members MembersR GET
