@@ -1,0 +1,4 @@
+$forall item <- items
+    <tr>
+        <td>
+            #{affiliationName $ entityVal item}

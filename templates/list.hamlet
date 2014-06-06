@@ -1,0 +1,5 @@
+<div class="panel panel-default">
+    <table class="table">
+        ^{lists}
+$maybe form <- maybeForm
+    ^{form}

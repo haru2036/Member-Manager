@@ -4,8 +4,11 @@ import Import
 
 getAffiliationsR :: Handler Html
 getAffiliationsR = do
-  affiliations <- runDB $ selectList [] [Desc AffiliationName]
-  defaultLayout $(widgetFile "affiliationsList")
+  items <- runDB $ selectList [] [Desc AffiliationName]
+  let lists = $(widgetFile "affiliationsRow")
+  let frm = $(widgetFile "affiliationForm")
+  let maybeForm = Just frm
+  defaultLayout $(widgetFile "list")
 
 postAffiliationsR :: Handler Html
 postAffiliationsR = do
@@ -15,8 +18,11 @@ postAffiliationsR = do
     "add"-> addAffiliation affiliationPost
     "remove" -> removeAffiliation affiliationPost
     _ -> lift $ return ()
-  affiliations <- runDB $ selectList [] [Desc AffiliationName]
-  defaultLayout $(widgetFile "affiliationsList")
+  items <- runDB $ selectList [] [Desc AffiliationName]
+  let lists = $(widgetFile "affiliationsRow")
+  let frm = $(widgetFile "affiliationForm")
+  let maybeForm = Just frm
+  defaultLayout $(widgetFile "list")
 
 addAffiliation name = do 
   runDB $ insert Affiliation
