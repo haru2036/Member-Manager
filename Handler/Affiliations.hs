@@ -12,7 +12,7 @@ getAffiliationsR = do
 
 postAffiliationsR :: Handler Html
 postAffiliationsR = do
-  affiliationPost<- runInputPost $ ireq textField "affiliationName"
+  affiliationPost <- runInputPost $ ireq textField "affiliationName"
   addremove <- runInputPost $ ireq textField "addremove"
   case addremove of
     "add"-> addAffiliation affiliationPost
