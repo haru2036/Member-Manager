@@ -12,3 +12,4 @@
 /add-member AddMemberR GET POST
 /admin/affiliations AffiliationsR GET POST
 /confirm/#String ConfirmMemberR GET
+/admin/send SendMailR GET POST

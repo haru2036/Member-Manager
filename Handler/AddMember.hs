@@ -8,6 +8,7 @@ import qualified Data.Text as T
 import qualified Data.Text.Lazy as LT
 import Network.Mail.Client.Gmail
 import Network.Mail.Mime
+import Helper.SendMail
 
 getAddMemberR :: Handler Html
 getAddMemberR = do 
@@ -42,7 +43,6 @@ sendConfirmMail member = do
     Nothing -> lift $ return (Just MsgSenderNotFoundError)
 
 
-getSender = runDB $ selectFirst [] [Asc SenderName]
 
 sendMail sender code address render = sendGmail 
                                (LT.fromStrict (senderGmail sender)) 
@@ -93,7 +93,4 @@ alwaysFalseField = Field
                                     }
 
 
-getAffiliationList = do 
-  aflist <- runDB $ selectList [] [Desc AffiliationName]
-  return $ map (\x -> (affiliationName (entityVal x), entityVal x)) $ aflist
 

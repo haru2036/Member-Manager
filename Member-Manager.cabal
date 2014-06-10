@@ -25,6 +25,8 @@ library
                      Handler.AddMember
                      Handler.Affiliations
                      Handler.ConfirmMember
+                     Handler.SendMail
+                     Helper.SendMail
 
     if flag(dev) || flag(library-only)
         cpp-options:   -DDEVELOPMENT
