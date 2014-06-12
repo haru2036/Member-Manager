@@ -12,3 +12,6 @@
             <tr>
                 <td>
                     <a href=@{AffiliationsR}>所属に関する設定
+            <tr>
+                <td>
+                    <a href=@{SendMailR}>メールを送信
