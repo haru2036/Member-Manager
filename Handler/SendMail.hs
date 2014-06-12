@@ -6,6 +6,7 @@ import Network.Mail.Client.Gmail
 import Network.Mail.Mime
 import Import
 import Helper.SendMail
+import Data.Text.Encoding
 
 getSendMailR :: Handler Html
 getSendMailR = do
@@ -48,7 +49,7 @@ sendMail sender title body members = do
                                (senderGmail sender)) 
                                [] 
                                [] 
-                               (map (\x -> Address Nothing (memberEmailAddress (entityVal x))) members)
+                               (map (\x -> Address (Just (memberEmailAddress (entityVal x))) (memberEmailAddress (entityVal x))) members)
                                (title) 
                                (LT.fromStrict body)
                                []
