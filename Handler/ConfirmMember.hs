@@ -9,7 +9,7 @@ getConfirmMemberR code = do
     Just uCMember -> confirmMember $ entityVal uCMember
     Nothing -> lift $ return()
   render <- getMessageRender
-  let mayBeMessage = Just MsgMemberConfirmed
+  let maybeMessage = Just MsgMemberConfirmed
   defaultLayout $(widgetFile "info")
 
 shrinkUCMember :: UnConfirmedMember -> Member

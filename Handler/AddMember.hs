@@ -21,7 +21,7 @@ postAddMemberR = do
   affiliations <- getAffiliationList
   ((result, widget), _) <- runFormPost (addMemberForm affiliations)
   render <- getMessageRender
-  mayBeMessage <- case result of
+  maybeMessage <- case result of
                     FormSuccess member -> sendConfirmMail member
                     _ -> lift $ return $ Just MsgFormError
   defaultLayout $(widgetFile "info")
