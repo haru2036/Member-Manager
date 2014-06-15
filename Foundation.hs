@@ -92,6 +92,7 @@ instance Yesod App where
     isAuthorized MembersR _ = isConfirmed
     isAuthorized AffiliationsR _ = isConfirmed
     isAuthorized SendMailR _ = isConfirmed
+    isAuthorized AdminR _ = isConfirmed
 
     isAuthorized _ _ = return Authorized
 
