@@ -6,11 +6,4 @@
                 <option value="#{affiliationName $ entityVal affiliation}">
                     #{affiliationName $ entityVal affiliation}
     <p>
-        タイトル
-        <input type="text" name="title" size="40">
-    <p>
-        本文
-        <textarea name="body" rows="6" cols="40">
-    <p>
         <input type="submit" value="送信">
-        <input type="reset" value="リセット">
