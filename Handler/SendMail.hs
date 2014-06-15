@@ -1,7 +1,9 @@
+{-# LANGUAGE OverloadedStrings #-}
 module Handler.SendMail where
 
 import Data.List 
 import qualified Data.Text.Lazy as LT
+import qualified Data.Text as T
 import Network.Mail.Client.Gmail
 import Network.Mail.Mime
 import Import
@@ -16,43 +18,32 @@ getSendMailR = do
 postSendMailR :: Handler Html
 postSendMailR = do
   affiliation <- runInputPost $ ireq textField "affiliation"
-  title       <- runInputPost $ ireq textField "title"
-  body        <- runInputPost $ ireq textField "body"
   maybeAffiliation <- getAffiliation affiliation
   render <- getMessageRender
-  msg <- sendMailToAffiliation maybeAffiliation title body
-  let mayBeMessage = Just msg
-  defaultLayout $(widgetFile "info")
+  eitherLink <- sendMailLinkToAffiliation maybeAffiliation 
+  case eitherLink of
+    Left msg -> do
+      let maybeMessage = Just msg
+      let maybeLink = (Nothing :: Maybe Text)
+      defaultLayout $(widgetFile "infoMail")
+    Right link -> do
+      let maybeMessage = Nothing
+      let maybeLink = Just link
+      defaultLayout $(widgetFile "infoMail")
 
-sendMailToAffiliation (Just aff) title body = do
+sendMailLinkToAffiliation (Just aff) = do
   maybeSender <- getSender
   affiliations <- getAffiliations
   members <- getMembers (inSubSeq (entityVal aff) (map (entityVal) affiliations))
-  case maybeSender of
-    Just sender -> do
-      _ <- lift $ sendMail (entityVal sender) title body members
-      lift $ return MsgMailSent
-    Nothing -> lift $ return MsgSenderNotFoundError
-sendMailToAffiliation Nothing _ _ = lift $ return MsgMailSendError
+  lift $ return $ Right $ sendMailUrl members
+sendMailLinkToAffiliation Nothing = lift $ return $ Left MsgMailSendError
 
 getAffiliation text = runDB $ getBy $ UniqueAffiliation text
 
 getMembers inAffiliations = runDB $ selectList [MemberAffiliations <-. inAffiliations] [Asc MemberEmailAddress]
 
-sendMail :: Sender -> Text -> Text -> [Entity Member] -> IO ()
-sendMail sender title body members = do
-                            print (map (\x -> (memberEmailAddress (entityVal x))) members)
-                            sendGmail 
-                               (LT.fromStrict (senderGmail sender)) 
-                               (LT.fromStrict (senderPasswd sender)) 
-                               (Address (Just (senderName sender)) 
-                               (senderGmail sender)) 
-                               [] 
-                               [] 
-                               (map (\x -> Address (Just (memberEmailAddress (entityVal x))) (memberEmailAddress (entityVal x))) members)
-                               (title) 
-                               (LT.fromStrict body)
-                               []
+sendMailUrl :: [Entity Member] -> Text
+sendMailUrl members = foldl (\acc x -> acc `T.append` "," `T.append` x) "https://mail.google.com/mail/?view=cm&fs=1&bcc=" $ map (memberEmailAddress . entityVal) members
 
 inLst :: Eq a => a -> [[a]] -> [[a]]
 inLst ina allList = filter (\x -> elem ina x) allList

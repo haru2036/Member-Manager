@@ -1,0 +1,5 @@
+$maybe message <- maybeMessage
+    <div class="alert alert-info">
+        #{render message}
+$maybe link <- maybeLink
+    <a href="#{link}">メール送信
